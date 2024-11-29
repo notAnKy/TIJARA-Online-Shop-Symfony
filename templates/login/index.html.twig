@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles for login page */
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            margin-top: 100px;
+        }
+
+        .alert {
+            transition: opacity 0.5s ease-in-out;
+            opacity: 1;
+        }
+
+        .alert.fade-out {
+            opacity: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container login-container">
+    <h2 class="text-center mb-4">Login</h2>
+    {% if error %}
+        <div id="error-message" class="alert alert-danger{% if not error %} d-none{% endif %}" role="alert">
+            Invalid login or password.
+        </div>
+    {% else %}
+        <div id="error-message" class="alert alert-danger d-none" role="alert">
+            Invalid login or password.
+        </div>
+    {% endif %}
+    <form id="login-form" method="post" action="{{ path('login') }}">
+        <div class="form-group">
+            <label for="login">Login:</label>
+            <input type="text" id="login" name="login" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-dark btn-block">Login</button>
+        <p class="text-center mt-3">New here? <a href="{{ path('signup') }}">Register</a> to open the signup page.</p>
+    </form>
+</div>
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var errorMessage = document.getElementById('error-message');
+            {% if error %}
+                errorMessage.classList.remove('d-none');
+                setTimeout(function() {
+                    errorMessage.classList.add('fade-out');
+                    setTimeout(function() {
+                        errorMessage.classList.add('d-none');
+                    }, 500); // Hide error message after the fade-out transition completes
+                }, 2000); // Start fading out after 2 seconds
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+{% endblock %}

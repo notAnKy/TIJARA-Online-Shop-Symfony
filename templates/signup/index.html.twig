@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block body %}
+
+<style>
+    .container {
+        margin-top: 100px;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Sign Up</h2>
+                    <form id="signup-form" method="post" action="{{ path('signup') }}">
+                        {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_label(form.login) }}
+                            {{ form_widget(form.login, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.password) }}
+                            {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.pays) }}
+                            {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        </br>
+                        <button type="submit" class="btn btn-dark btn-block">Sign Up</button>
+                        </br>
+                        {{ form_end(form) }}
+                        <div id="success-message" class="alert alert-success d-none" role="alert">
+                            Signed up successfully.
+                        </div>
+                    </form>
+                    <p class="text-center mt-3">Already a member? <a href="{{ path('login') }}">Login In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var signupForm = document.getElementById('signup-form');
+            var successMessage = document.getElementById('success-message');
+
+            signupForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent form submission
+
+                // Perform form submission using Fetch API or AJAX
+                fetch(signupForm.action, {
+                    method: signupForm.method,
+                    body: new FormData(signupForm)
+                })
+                .then(function (response) {
+                    if (response.ok) {
+                        // Show success message and hide form
+                        successMessage.classList.remove('d-none');
+                        signupForm.classList.add('d-none');
+
+                        // Redirect to login page after 1.5 seconds
+                        setTimeout(function () {
+                            window.location.href = '{{ path('login') }}';
+                        }, 1500);
+                    } else {
+                        // Handle error response
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+{% endblock %}

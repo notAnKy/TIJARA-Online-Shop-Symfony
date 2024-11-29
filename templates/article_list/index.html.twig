@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article List{% endblock %}
+{% block stylesheets %}
+    <style>
+        .custom-list-group {
+            background-color: #f8f9fa; /* Set your desired background color */
+             border-radius: 0;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <!-- Dashboard Navigation Bar -->
+    <div class="row">
+        <div class="col-md-2 p-0">
+            <div class="list-group custom-list-group h-100 d-flex flex-column">
+                <a href="{{ path('app_adminpage') }}" class="list-group-item list-group-item-action active">
+                    Dashboard
+                </a>
+                <a href="{{ path('article_list') }}" class="list-group-item list-group-item-action">
+                    Article List
+                </a>
+                <a href="{{ path('internaute_list') }}" class="list-group-item list-group-item-action">
+                    Internaute List
+                </a>
+                <div class="dropdown mt-auto">
+                    <a href="#" class="list-group-item list-group-item-action dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Hi,  {{ login_name }}!
+                    </a>
+                <a href="{{ path('logout') }}" class="list-group-item list-group-item-action">Logout</a>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content Area -->
+        <div class="col-md-10">
+            <div class="container">
+                <h1 class="text-center">Article List</h1>
+
+                <form method="get" action="{{ path('app_article_list') }}">
+                    <div class="form-outline" data-mdb-input-init>
+                        <input type="search" id="form1" class="form-control" placeholder="search" aria-label="Search" name="q" />
+                    </div>
+                    </br>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ path('app_article_list') }}'">Clear</button>
+                </form>
+
+
+                </br>
+                <div class="row justify-content-center">
+                    {% for article in articles %}
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ article.libArt }}</h5>
+                                <p class="card-text">Product Added by admin </p>
+                                <p class="card-text">to view more details click the button bellow </p>
+                                <a href="{{ path('article_details', {'id': article.id}) }}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+

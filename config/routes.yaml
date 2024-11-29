@@ -1,7 +1,48 @@
 controllers:
-    resource: ../src/Controller/
-    type: annotation
+  resource: ../src/Controller/
+  type: annotation
 
 kernel:
-    resource: ../src/Kernel.php
-    type: annotation
+  resource: ../src/Kernel.php
+  type: annotation
+
+# config/routes.yaml
+login:
+  path: /login
+  controller: App\Controller\LoginController::index
+
+app_default_route:
+  path: /
+  controller: App\Controller\LoginController::index
+
+adminpage:
+  path: /admin
+  controller: App\Controller\AdminpageController::index
+
+employeepage:
+  path: /employee
+  controller: App\Controller\EmployeepageController::index
+
+signup:
+  path: /signup
+  controller: App\Controller\SignupController::index
+
+article_list:
+  path: /article-list
+  controller: App\Controller\ArticleListController::index
+
+article_details:
+  path: /article-details/{id}
+  controller: App\Controller\ArticleListController::details
+
+internaute_list:
+  path: /internaute/list
+  controller: App\Controller\InternauteListController::index
+
+internaute_panier:
+  path: /internaute/panier/{id}
+  controller: App\Controller\InternauteListController::viewPanier
+
+logout:
+  path: "/logout"
+  controller: App\Controller\LoginController::logout
